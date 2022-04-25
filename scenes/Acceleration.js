@@ -27,7 +27,7 @@ class Acceleration extends Phaser.Scene {
         this.alien = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'platformer_atlas', 'front').setScale(SCALE);
         this.alien.setCollideWorldBounds(true);
         // set alien max velocity here (.body.setMaxVelocityX())
-        this.alien.body.setMaxVelocity(200);
+        // this.alien.body.setMaxVelocity(300);
 
         // note that we don't have to set up animations again because they were already created in the previous scene
 
@@ -81,7 +81,7 @@ class Acceleration extends Phaser.Scene {
         } else {
             // set acceleration to 0 here so DRAG will take over
 
-            
+
             this.alien.body.setDragX(this.DRAG);
 
             // Animation and key shading
