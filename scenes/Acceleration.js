@@ -62,7 +62,8 @@ class Acceleration extends Phaser.Scene {
         // check keyboard input
         if(cursors.left.isDown) {
             // set alien acceleration here
-this.alien.setAccelerationX(-1000);
+
+
             // Animation and key shading
             // see: https://photonstorm.github.io/phaser3-docs/Phaser.GameObjects.Components.Animation.html#play__anchor
             // play(key [, ignoreIfPlaying] [, startFrame])
@@ -71,14 +72,16 @@ this.alien.setAccelerationX(-1000);
             this.leftKey.tint = 0xFACADE;   // tint key
         } else if(cursors.right.isDown) {
             // set alien acceleration here
-            this.alien.setAccelerationX(1000);
+
+
             // Animation and key shading
             this.alien.resetFlip();
             this.alien.anims.play('walk', true);
             this.rightKey.tint = 0xFACADE;  // tint key
         } else {
             // set acceleration to 0 here so DRAG will take over
-            this.alien.setAccelerationX(0);
+
+            
             this.alien.body.setDragX(this.DRAG);
 
             // Animation and key shading

@@ -107,7 +107,8 @@ class Jump extends Phaser.Scene {
         // note: there is unfortunately no .justDown property in Phaser's cursor object
         if(this.alien.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
             // set jump velocity here
-            this.alien.setVelocityY(-2000);
+
+            
             this.upKey.tint = 0xFACADE;
         } else {
             this.upKey.tint = 0xFFFFFF;
