@@ -15,7 +15,7 @@ class Runner extends Phaser.Scene {
         this.talltrees = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'talltrees').setOrigin(0);
 
         // print Scene name
-        this.add.text(game.config.width/2, 30, 'Scene 5: Endless Strollin\'', { font: '14px Futura', fill: '#00AA11' }).setOrigin(0.5);
+        this.add.text(game.config.width/2, 30, 'Scene 4: Endless Strollin\'', { font: '14px Futura', fill: '#00AA11' }).setOrigin(0.5);
 
         // make ground tiles group
         this.ground = this.add.group();
@@ -50,34 +50,7 @@ class Runner extends Phaser.Scene {
         this.physics.add.collider(this.alien, this.ground);
 
         // set up Scene switcher
-        this.input.keyboard.on('keydown', (event) => {
-            //console.log(event);
-            switch(event.key) {
-                case '1':
-                    this.scene.start('velocityScene');
-                    break;
-                case '2':
-                    this.scene.start('accelerationScene');
-                    break;
-                case '3':
-                    this.scene.start('fixedJumpScene');
-                    break;
-                case '4':
-                    this.scene.start('variableJumpScene');
-                    break;
-                case '5':
-                    this.scene.start('runnerScene');
-                    break;
-                case '6':
-                    this.scene.start('pogoScene');
-                    break;
-                case '7':
-                    this.scene.start('asteroidsScene');
-                    break;
-                default:
-                    break;
-            }
-        });
+        this.input.keyboard.on('keydown', sceneSwitcher);
     }
 
     update() {

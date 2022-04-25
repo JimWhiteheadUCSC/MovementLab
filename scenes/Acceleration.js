@@ -5,7 +5,6 @@ class Acceleration extends Phaser.Scene {
 
     create() {
         // variables and settings
-        this.ACCELERATION = 500;
         this.DRAG = 200;    // DRAG < ACCELERATION = icy slide
         this.physics.world.gravity.y = 1000;
 
@@ -27,6 +26,9 @@ class Acceleration extends Phaser.Scene {
         // set up my alien son 👽
         this.alien = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'platformer_atlas', 'front').setScale(SCALE);
         this.alien.setCollideWorldBounds(true);
+        // set alien max velocity here (.body.setMaxVelocityX())
+        this.alien.body.setMaxVelocity(200);
+
         // note that we don't have to set up animations again because they were already created in the previous scene
 
         // add some physics clouds
@@ -53,54 +55,33 @@ class Acceleration extends Phaser.Scene {
         this.physics.add.collider(this.alien, this.ground);
 
         // set up Scene switcher
-        this.input.keyboard.on('keydown', (event) => {
-            //console.log(event);
-            switch(event.key) {
-                case '1':
-                    this.scene.start('velocityScene');
-                    break;
-                case '2':
-                    this.scene.start('accelerationScene');
-                    break;
-                case '3':
-                    this.scene.start('fixedJumpScene');
-                    break;
-                case '4':
-                    this.scene.start('variableJumpScene');
-                    break;
-                case '5':
-                    this.scene.start('runnerScene');
-                    break;
-                case '6':
-                    this.scene.start('pogoScene');
-                    break;
-                case '7':
-                    this.scene.start('asteroidsScene');
-                    break;
-                default:
-                    break;
-            }
-        });
+        this.input.keyboard.on('keydown', sceneSwitcher);     
     }
 
     update() {
         // check keyboard input
         if(cursors.left.isDown) {
-            this.alien.body.setAccelerationX(-this.ACCELERATION);
-            this.alien.setFlip(true, false);
+            // set alien acceleration here
+this.alien.setAccelerationX(-1000);
+            // Animation and key shading
             // see: https://photonstorm.github.io/phaser3-docs/Phaser.GameObjects.Components.Animation.html#play__anchor
             // play(key [, ignoreIfPlaying] [, startFrame])
+            this.alien.setFlip(true, false);
             this.alien.anims.play('walk', true);
             this.leftKey.tint = 0xFACADE;   // tint key
         } else if(cursors.right.isDown) {
-            this.alien.body.setAccelerationX(this.ACCELERATION);
+            // set alien acceleration here
+            this.alien.setAccelerationX(1000);
+            // Animation and key shading
             this.alien.resetFlip();
             this.alien.anims.play('walk', true);
             this.rightKey.tint = 0xFACADE;  // tint key
         } else {
-            // set acceleration to 0 so DRAG will take over
-            this.alien.body.setAccelerationX(0);
+            // set acceleration to 0 here so DRAG will take over
+            this.alien.setAccelerationX(0);
             this.alien.body.setDragX(this.DRAG);
+
+            // Animation and key shading
             this.alien.anims.play('idle');
             this.leftKey.tint = 0xFFFFFF;   // un-tint keys
             this.rightKey.tint = 0xFFFFFF;  

@@ -29,7 +29,51 @@ let config = {
             }
         }
     },
-    scene: [ Load, Velocity, Acceleration, FixedJump, VariableJump, Runner, Pogo, Asteroids ]
+    scene: [ Load, Velocity, Acceleration, Jump, Runner ]
 };
 
 let game = new Phaser.Game(config);
+
+// Utility methods used by all scenes
+
+// sceneSwitcher is used to check for number presses,
+// which switch scenes.
+// Use game, instead of this, since sceneSwitcher is outside
+// of a scene. The game object has a pointer to the scene
+// manager in "game.scene".
+let sceneSwitcher = (event) => {
+    //console.log("Key is: " + event.key);
+    switch(event.key) {
+        case '1':
+            game.scene.start('velocityScene');
+            game.scene.bringToTop('velocityScene');
+            game.scene.pause('accelerationScene');
+            game.scene.pause('jumpScene');
+            game.scene.pause('runnerScene');
+            break;
+        case '2':
+            game.scene.start('accelerationScene');
+            game.scene.bringToTop('accelerationScene');
+            game.scene.pause('velocityScene');
+            game.scene.pause('jumpScene');
+            game.scene.pause('runnerScene');
+            break;
+        case '3':
+            game.scene.start('jumpScene');
+            game.scene.bringToTop('jumpScene');
+            game.scene.pause('velocityScene');
+            game.scene.pause('accelerationScene');
+            game.scene.pause('runnerScene');
+            break;
+        case '4':
+            game.scene.start('runnerScene');
+            game.scene.bringToTop('runnerScene');
+            game.scene.pause('velocityScene');
+            game.scene.pause('accelerationScene');
+            game.scene.pause('jumpScene');
+            break;
+        default:
+            break;
+    }
+}
+

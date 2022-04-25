@@ -1,6 +1,6 @@
-class FixedJump extends Phaser.Scene {
+class Jump extends Phaser.Scene {
     constructor() {
-        super('fixedJumpScene');
+        super('jumpScene');
     }
 
     create() {
@@ -9,8 +9,7 @@ class FixedJump extends Phaser.Scene {
         this.MAX_X_VEL = 500;   // pixels/second
         this.MAX_Y_VEL = 5000;
         this.DRAG = 600;    // DRAG < ACCELERATION = icy slide
-        this.JUMP_VELOCITY = -1000;
-        this.physics.world.gravity.y = 3000;
+        this.physics.world.gravity.y = 10000;
 
         // set bg color
         this.cameras.main.setBackgroundColor('#227B96');
@@ -71,36 +70,10 @@ class FixedJump extends Phaser.Scene {
 
         // add physics collider
         this.physics.add.collider(this.alien, this.ground);
+        
 
         // set up Scene switcher
-        this.input.keyboard.on('keydown', (event) => {
-            //console.log(event);
-            switch(event.key) {
-                case '1':
-                    this.scene.start('velocityScene');
-                    break;
-                case '2':
-                    this.scene.start('accelerationScene');
-                    break;
-                case '3':
-                    this.scene.start('fixedJumpScene');
-                    break;
-                case '4':
-                    this.scene.start('variableJumpScene');
-                    break;
-                case '5':
-                    this.scene.start('runnerScene');
-                    break;
-                case '6':
-                    this.scene.start('pogoScene');
-                    break;
-                case '7':
-                    this.scene.start('asteroidsScene');
-                    break;
-                default:
-                    break;
-            }
-        });
+        this.input.keyboard.on('keydown', sceneSwitcher);
     }
 
     update() {
@@ -133,7 +106,8 @@ class FixedJump extends Phaser.Scene {
         // use JustDown to avoid 'pogo' jumps if you player keeps the up key held down
         // note: there is unfortunately no .justDown property in Phaser's cursor object
         if(this.alien.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
-            this.alien.body.setVelocityY(this.JUMP_VELOCITY);
+            // set jump velocity here
+            this.alien.setVelocityY(-2000);
             this.upKey.tint = 0xFACADE;
         } else {
             this.upKey.tint = 0xFFFFFF;
@@ -142,6 +116,6 @@ class FixedJump extends Phaser.Scene {
         // wrap physics object(s) .wrap(gameObject, padding)
         this.physics.world.wrap(this.cloud01, this.cloud01.width/2);
         this.physics.world.wrap(this.cloud02, this.cloud02.width/2);
-        this.physics.world.wrap(this.alien, this.alien.width/2);
+        this.physics.world.wrap(this.alien, 0);
     }
 }
